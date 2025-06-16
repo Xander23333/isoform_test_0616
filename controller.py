@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, abort
 from flask_cors import CORS
-from data_define import Flag, EvaluateRequest
+from model import Flag, EvaluateRequest
 from service import evaluate, addOrUpdateFlag
 
 app = Flask(__name__)
@@ -10,7 +10,7 @@ CORS(app)  # 启用CORS支持
 def flags_endpoint():
     try:
         data = request.get_json()
-        flags_data = Flag(**data)
+        flags_data = Flag.from_dict(data)
         result = addOrUpdateFlag(flags_data)
         return str(result), 200
     except Exception as e:

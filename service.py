@@ -1,4 +1,4 @@
-from data_define import Flag, EvaluateRequest, Rule, Condition, User
+from model import Flag, EvaluateRequest, Rule, Condition, User
 
 # 模拟数据库
 flags_map = {}
@@ -85,7 +85,12 @@ def evaluate(user_id, flag_name):
 
 def addOrUpdateFlag(flag):
     # 输入的flag是json，需要转换为Flag对象
-    flag = Flag(**flag)
+    if isinstance(flag, dict):
+        flag = Flag.from_dict(flag)
+    elif isinstance(flag, Flag):
+        pass
+    else:
+        raise TypeError("Expected dict or Flag object")
     flags_map[flag.name] = flag
     return True
 
@@ -104,6 +109,6 @@ if __name__ == "__main__":
         default=False
     )
 
-# 遍历user，测试new feature
+    # 遍历user，测试new feature
     for user in test_users:
         print(user.user_id, evaluate(user.user_id, "new_feature"))

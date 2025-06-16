@@ -1,32 +1,32 @@
-from dataclasses import dataclass
+from pydantic import BaseModel
 from typing import List, Any
 
-@dataclass
-class Condition:
+class Condition(BaseModel):
     column: str
     operator: str
     value: Any
 
-@dataclass
-class Rule:
+class Rule(BaseModel):
     conditions: List[Condition]
     priority: int
     rollout: int = None  # 可选
 
-@dataclass
-class Flag:
+class Flag(BaseModel):
     name: str
     rules: List[Rule]
     default: Any
 
-@dataclass
-class EvaluateRequest:
+    @classmethod
+    def from_dict(cls, data):
+        if 'rules' in data:
+            data['rules'] = [Rule(**rule) for rule in data['rules']]
+        return cls(**data)
+
+class EvaluateRequest(BaseModel):
     user_id: str
     flag: str
 
-
-@dataclass
-class User:
+class User(BaseModel):
     user_id: str  # Unique user identifier (abc123)
     region: str   # User's geographic region (us, eu, cn)
     tier: str    

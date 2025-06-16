@@ -1,17 +1,22 @@
 # Feature Flag Service
 
 ## 项目描述
-这是一个基于Flask的Feature Flag服务，用于管理用户的功能标志。该服务支持通过API添加和更新标志，并根据用户属性评估标志的状态。
+这是一个基于Flask的Feature Flag服务，采用MVC架构，用于管理用户的功能标志。该服务支持通过API添加和更新标志，并根据用户属性评估标志的状态。
 
 ## 功能
 - 添加和更新功能标志
 - 根据用户属性评估标志状态
 - 支持灰度发布
 
+## 项目结构
+- **Model**: 数据模型定义在 `models.py` 中
+- **Service**: 业务逻辑在 `service.py` 中
+- **Controller**: API响应和错误处理在 `controllers.py` 中
+
 ## 使用说明
 1. 启动服务：
    ```bash
-   python app.py
+   python controllers.py
    ```
 
 2. 添加或更新标志：
