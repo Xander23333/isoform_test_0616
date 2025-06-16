@@ -84,6 +84,8 @@ def evaluate(user_id, flag_name):
     return flag.default
 
 def addOrUpdateFlag(flag):
+    # 输入的flag是json，需要转换为Flag对象
+    flag = Flag(**flag)
     flags_map[flag.name] = flag
     return True
 
